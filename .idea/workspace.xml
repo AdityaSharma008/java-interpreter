@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbc9f913-cfdd-48cd-92af-bf77aef0b091" name="Changes" comment="" />
+    <list default="true" id="fbc9f913-cfdd-48cd-92af-bf77aef0b091" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jlox/Expr.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jlox/Expr.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jlox/Interpreter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jlox/Interpreter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jlox/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jlox/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jlox/Stmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jlox/Stmt.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
