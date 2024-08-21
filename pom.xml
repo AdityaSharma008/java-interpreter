@@ -9,26 +9,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
-        <!-- JUnit 5 Dependency -->
+        <!-- JUnit 5 Dependency (Includes API, Engine, and Params) -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.11.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JUnit 5 Engine for running tests -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.11.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- JUnit 5 Parameterized Tests -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
+            <artifactId>junit-jupiter</artifactId>
             <version>5.11.0</version>
             <scope>test</scope>
         </dependency>
@@ -48,7 +32,6 @@
             <version>24.0.1</version>
         </dependency>
     </dependencies>
-
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
