@@ -56,58 +56,69 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
         Object left = evaluate(expr.left);
         Object right = evaluate(expr.right);
 
-        switch (expr.operator.type){
-            case MINUS:
+        switch (expr.operator.type) {
+            case MINUS -> {
                 checkNumberOperands(expr.operator, left, right);
-                return (double)left - (double)right;
-            case STAR:
+                return (double) left - (double) right;
+            }
+            case STAR -> {
                 checkNumberOperands(expr.operator, left, right);
-                return (double)left * (double)right;
-            case SLASH:
+                return (double) left * (double) right;
+            }
+            case SLASH -> {
                 checkNumberOperands(expr.operator, left, right);
-                if((Double) right == 0){
+                if ((Double) right == 0) {
                     throw new RuntimeError(expr.operator, "Cannot Divide by zero.");
                 }
-                return (double)left / (double)right;
-            case PLUS:
-                if(left instanceof Double && right instanceof Double){
-                    return (double)left + (double)right;
+                return (double) left / (double) right;
+            }
+            case PLUS -> {
+                if (left instanceof Double && right instanceof Double) {
+                    return (double) left + (double) right;
                 }
-
-                if(left instanceof String && right instanceof String){
-                    return (String)left + (String)right;
+                if (left instanceof String && right instanceof String) {
+                    return (String) left + (String) right;
                 }
 
                 //Concatenation
-                if(left instanceof String || right instanceof String){
+                if (left instanceof String || right instanceof String) {
                     if (left instanceof Double) {
                         left = String.valueOf(left);
                         //removing .0 from Double to String conversion
-                        if(((String) left).endsWith(".0")) left = ((String) left).substring(0, ((String) left).length() - 2);
-                    }
-                    else if (right instanceof Double) {
+                        if (((String) left).endsWith(".0"))
+                            left = ((String) left).substring(0, ((String) left).length() - 2);
+                    } else if (right instanceof Double) {
                         right = String.valueOf(right);
-                        if(((String) right).endsWith(".0")) right = ((String) right).substring(0, ((String) right).length() - 2);
+                        if (((String) right).endsWith(".0"))
+                            right = ((String) right).substring(0, ((String) right).length() - 2);
                     }
 
                     return (String) left + (String) right;
                 }
-
                 throw new RuntimeError(expr.operator, "Operands must be two numbers or two strings.");
-            case GREATER:
+            }
+            case GREATER -> {
                 checkNumberOperands(expr.operator, left, right);
-                return (double)left > (double)right;
-            case GREATER_EQUAL:
+                return (double) left > (double) right;
+            }
+            case GREATER_EQUAL -> {
                 checkNumberOperands(expr.operator, left, right);
-                return (double)left >= (double)right;
-            case LESS:
+                return (double) left >= (double) right;
+            }
+            case LESS -> {
                 checkNumberOperands(expr.operator, left, right);
-                return (double)left < (double)right;
-            case LESS_EQUAL:
+                return (double) left < (double) right;
+            }
+            case LESS_EQUAL -> {
                 checkNumberOperands(expr.operator, left, right);
-                return (double)left <= (double)right;
-            case BANG_EQUAL: return !isEqual(left, right);
-            case EQUAL_EQUAL: return isEqual(left, right);
+                return (double) left <= (double) right;
+            }
+            case BANG_EQUAL -> {
+                return !isEqual(left, right);
+            }
+            case EQUAL_EQUAL -> {
+                return isEqual(left, right);
+            }
         }
 
         return null;
@@ -117,12 +128,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
     public Object visitUnaryExpr(Expr.Unary expr) {
         Object right = evaluate(expr.right);
 
-        switch (expr.operator.type){
-            case BANG:
+        switch (expr.operator.type) {
+            case BANG -> {
                 return !isTruthy(right);
-            case MINUS:
+            }
+            case MINUS -> {
                 checkNumberOperand(expr.operator, right);
-                return -(double)right;
+                return -(double) right;
+            }
         }
 
         return right;

@@ -13,7 +13,7 @@ public class AssignmentTest {
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
-    private static final String lineSepartor = System.lineSeparator();
+    private static final String lineSeparator = System.lineSeparator();
 
     @BeforeEach
     public void setUpStreams() {
@@ -43,7 +43,7 @@ public class AssignmentTest {
 
         helper(script);
 
-        String expectedOutput = "c" + lineSepartor + "c" + lineSepartor + "c" + lineSepartor;
+        String expectedOutput = "c" + lineSeparator + "c" + lineSeparator + "c" + lineSeparator;
 
         assertEquals(expectedOutput, outContent.toString());
     }
@@ -57,7 +57,7 @@ public class AssignmentTest {
 
         helper(script);
 
-        String expectedOutput = "[line 1]: Undefined Variable 'undef'." + lineSepartor;
+        String expectedOutput = "[line 1]: Undefined Variable 'undef'." + lineSeparator;
 
         assertEquals(expectedOutput, errContent.toString());
     }
@@ -77,7 +77,7 @@ public class AssignmentTest {
 
         helper(script);
 
-        String expectedOutput = "10" + lineSepartor + "20" + lineSepartor + "10" + lineSepartor;
+        String expectedOutput = "10" + lineSeparator + "20" + lineSeparator + "10" + lineSeparator;
 
         assertEquals(expectedOutput, outContent.toString());
     }

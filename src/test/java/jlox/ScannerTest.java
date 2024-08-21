@@ -6,16 +6,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
-import java.text.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @Tag("Scanner")
@@ -42,7 +39,7 @@ class ScannerTest {
     @ParameterizedTest
     @MethodSource("keywordTestCases")
     @DisplayName("Check that reserved keywords are identified correctly")
-    void checkReservedKeyword(String sourceUnderTest, TokenType tokenType) throws IOException {
+    void checkReservedKeyword(String sourceUnderTest, TokenType tokenType) {
         // given
         Scanner scannerUnderTest = new Scanner(sourceUnderTest);
 
@@ -60,7 +57,7 @@ class ScannerTest {
     @ParameterizedTest
     @MethodSource("tokenTestCases")
     @DisplayName("Test for tokens")
-    void checkTokens(String sourceUnderTest, TokenType tokenType) throws IOException{
+    void checkTokens(String sourceUnderTest, TokenType tokenType) {
         Scanner scannerUnderTest = new Scanner(sourceUnderTest);
 
         List<Token> testTokens = scannerUnderTest.scanTokens();
@@ -75,7 +72,7 @@ class ScannerTest {
     @ParameterizedTest
     @MethodSource("identifierTestCases")
     @DisplayName("Check that Identifiers are recognized correctly")
-    void checkIdentifiers(String sourceUnderTest) throws IOException {
+    void checkIdentifiers(String sourceUnderTest) {
         Scanner scannerUnderTest = new Scanner(sourceUnderTest);
 
         List<Token> testTokens = scannerUnderTest.scanTokens();
@@ -90,7 +87,7 @@ class ScannerTest {
     @ParameterizedTest
     @MethodSource("commentTestCases")
     @DisplayName("Check that comments are ignored")
-    void checkComments(String sourceUnderTest, int numLines) throws IOException{
+    void checkComments(String sourceUnderTest, int numLines) {
         Scanner scannerUnderTest = new Scanner(sourceUnderTest);
 
         List<Token> testTokens = scannerUnderTest.scanTokens();
@@ -104,7 +101,7 @@ class ScannerTest {
     @ParameterizedTest
     @MethodSource("numberTestCases")
     @DisplayName("Check if numbers are recognized properly")
-    void checkNumbers(String sourceUnderTest) throws IOException{
+    void checkNumbers(String sourceUnderTest) {
         Scanner scannerUnderTest = new Scanner(sourceUnderTest);
 
         List<Token> testTokens = scannerUnderTest.scanTokens();
@@ -119,7 +116,7 @@ class ScannerTest {
     @ParameterizedTest
     @MethodSource("stringTestCases")
     @DisplayName("Check if String are recognized properly")
-    void checkString(String sourceUnderTest, int numLine) throws IOException{
+    void checkString(String sourceUnderTest, int numLine) {
         Scanner scannerUnderTest = new Scanner(sourceUnderTest);
 
         List<Token> testTokens = scannerUnderTest.scanTokens();
@@ -137,7 +134,7 @@ class ScannerTest {
         String wrong = "\"I am a string with no closing quote.";
         Scanner scannerUnderTest = new Scanner(wrong);
 
-        List<Token> testTokens = scannerUnderTest.scanTokens();
+        scannerUnderTest.scanTokens();
 
         String lineSeparator = System.lineSeparator();
         assertEquals("[line 1] Error: Unterminated String." + lineSeparator, errContent.toString());
@@ -149,7 +146,7 @@ class ScannerTest {
     void checkWrongCharacters(String sourceUnderTest){
         Scanner scannerUnderTest = new Scanner(sourceUnderTest);
 
-        List<Token> testTokens = scannerUnderTest.scanTokens();
+        scannerUnderTest.scanTokens();
 
         String lineSeparator = System.lineSeparator();
         assertEquals("[line 1] Error: Unexpected character." + lineSeparator, errContent.toString());

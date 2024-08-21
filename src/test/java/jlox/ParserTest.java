@@ -20,7 +20,7 @@ public class ParserTest {
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
-    private static final String lineSepartor = System.lineSeparator();
+    private static final String lineSeparator = System.lineSeparator();
 
     @BeforeEach
     public void setUpStreams() {
@@ -43,7 +43,7 @@ public class ParserTest {
 
         helper(script);
 
-        String expectedOutput = "[line 1] Error at ';': Expect expression." + lineSepartor;
+        String expectedOutput = "[line 1] Error at ';': Expect expression." + lineSeparator;
 
         assertEquals(expectedOutput, errContent.toString());
     }
@@ -58,7 +58,7 @@ public class ParserTest {
 
         helper(script);
 
-        String expectedOutput = "[line 3] Error at '=': Expect variable name." + lineSepartor;
+        String expectedOutput = "[line 3] Error at '=': Expect variable name." + lineSeparator;
 
         assertEquals(expectedOutput, errContent.toString());
     }
@@ -69,7 +69,7 @@ public class ParserTest {
     void testSemicolons(String script, String after, int line, String temp){
         helper(script);
 
-        String expectedOutput = "[line "+ line + "] Error at '" + temp + "': Expect ';' after " + after + lineSepartor;
+        String expectedOutput = "[line "+ line + "] Error at '" + temp + "': Expect ';' after " + after + lineSeparator;
 
         assertEquals(expectedOutput, errContent.toString());
     }
@@ -90,6 +90,6 @@ public class ParserTest {
         Scanner scanner = new Scanner(script);
         List<Token> tokens = scanner.scanTokens();
         Parser parser = new Parser(tokens);
-        List<Stmt> statements = parser.parse();
+        parser.parse();
     }
 }
