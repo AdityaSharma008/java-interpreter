@@ -145,7 +145,7 @@ public class Scanner {
             if(peek() == '\n') line++;
             advance();
         }
-        if(isAtEnd()) Lox.error(line, "Unterminated String");
+        if(isAtEnd()) Lox.error(line, "Unterminated String.");
         advance();
         String value = source.substring(start + 1, current - 1);
         addToken(STRING, value);

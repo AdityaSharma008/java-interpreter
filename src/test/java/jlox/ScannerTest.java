@@ -1,25 +1,42 @@
 package jlox;
 
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.text.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @Tag("Scanner")
 @DisplayName("ScannerTest")
 class ScannerTest {
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    private final PrintStream originalErr = System.err;
+
+    @BeforeEach
+    public void setUpStreams() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+    }
+
+    @AfterEach
+    public void restoreStreams() {
+        System.setOut(originalOut);
+        System.setErr(originalErr);
+    }
 
     @Tag("Scanner")
     @ParameterizedTest
@@ -114,6 +131,30 @@ class ScannerTest {
         assertThat(testTokens).usingRecursiveComparison().isEqualTo(expectedTokens);
     }
 
+    @Test
+    @DisplayName("Check illegal string")
+    void checkWrongString(){
+        String wrong = "\"I am a string with no closing quote.";
+        Scanner scannerUnderTest = new Scanner(wrong);
+
+        List<Token> testTokens = scannerUnderTest.scanTokens();
+
+        String lineSeparator = System.lineSeparator();
+        assertEquals("[line 1] Error: Unterminated String." + lineSeparator, errContent.toString());
+    }
+
+    @DisplayName("Check for wrong characters")
+    @ParameterizedTest
+    @MethodSource("wrongCharactersList")
+    void checkWrongCharacters(String sourceUnderTest){
+        Scanner scannerUnderTest = new Scanner(sourceUnderTest);
+
+        List<Token> testTokens = scannerUnderTest.scanTokens();
+
+        String lineSeparator = System.lineSeparator();
+        assertEquals("[line 1] Error: Unexpected character." + lineSeparator, errContent.toString());
+    }
+
     // Method source for the parameterized test
     @org.jetbrains.annotations.NotNull
     private static Stream<Arguments> keywordTestCases() {
@@ -192,6 +233,16 @@ class ScannerTest {
                 Arguments.of("\"I am a String.\"", 1),
                 Arguments.of("\"I am a multiline string.\nThis line is on new row.\nThis is on third row\"", 3),
                 Arguments.of("\"\nI start from second line.\"", 2)
+        );
+    }
+
+    @org.jetbrains.annotations.NotNull
+    private static Stream<Arguments> wrongCharactersList(){
+        return Stream.of(
+                Arguments.of("@"),
+                Arguments.of("$"),
+                Arguments.of("^"),
+                Arguments.of("`")
         );
     }
 
