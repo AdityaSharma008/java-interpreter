@@ -25,7 +25,7 @@ This project is a simple interpreter written in Java, based on concepts learned 
    - Without Maven:
       ```bash
       cd src/main/java/
-      javac -d bin src/main/java/jlox/*.java
+      javac -d bin jlox/*.java
       ```
 
 ## Usage
