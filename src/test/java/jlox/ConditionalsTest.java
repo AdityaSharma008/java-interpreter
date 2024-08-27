@@ -43,13 +43,13 @@ public class ConditionalsTest {
         assertEquals(expected, outContent.toString());
     }
 
-    void helper(String script){
-        Scanner scanner = new Scanner(script);
-        List<Token> tokens = scanner.scanTokens();
-        Parser parser = new Parser(tokens);
-        List<Stmt> statements = parser.parse();
-        Interpreter interpreter = new Interpreter();
-        interpreter.interpret(statements);
+    @DisplayName("Check if-else logic")
+    @ParameterizedTest
+    @MethodSource("ifElse")
+    void checkIfElse(String sourceUnderTest, String expected){
+        helper(sourceUnderTest);
+        expected += lineSeparator;
+        assertEquals(expected, outContent.toString());
     }
 
     private static Stream<Arguments> danglingElse(){
@@ -57,5 +57,21 @@ public class ConditionalsTest {
                 Arguments.of("if (true) if (false) print \"bad\"; else print \"good\";", "good"),
                 Arguments.of("if (true) if (true) print \"bad\"; else print \"good\";", "bad")
         );
+    }
+
+    private static Stream<Arguments> ifElse(){
+        return Stream.of(
+                Arguments.of("if (true) print \"if\"; else print \"else\";", "if"),
+                Arguments.of("if (false) print \"if\"; else print \"else\";", "else")
+        );
+    }
+
+    void helper(String script){
+        Scanner scanner = new Scanner(script);
+        List<Token> tokens = scanner.scanTokens();
+        Parser parser = new Parser(tokens);
+        List<Stmt> statements = parser.parse();
+        Interpreter interpreter = new Interpreter();
+        interpreter.interpret(statements);
     }
 }
