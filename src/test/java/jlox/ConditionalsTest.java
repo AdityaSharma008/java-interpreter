@@ -39,7 +39,7 @@ public class ConditionalsTest {
     @MethodSource("danglingElse")
     void checkDanglingElse(String sourceUnderTest, String expected){
         helper(sourceUnderTest);
-        expected += lineSeparator;
+
         assertEquals(expected, outContent.toString());
     }
 
@@ -48,21 +48,36 @@ public class ConditionalsTest {
     @MethodSource("ifElse")
     void checkIfElse(String sourceUnderTest, String expected){
         helper(sourceUnderTest);
-        expected += lineSeparator;
+
+        assertEquals(expected, outContent.toString());
+    }
+
+    @DisplayName("Assignment in if condition")
+    @Test
+    void checkAssignmentInIf(){
+        String source = """
+                var a = false;
+                if (a = true) print a;
+                """;
+
+        helper(source);
+        String expected = "true" + lineSeparator;
+
         assertEquals(expected, outContent.toString());
     }
 
     private static Stream<Arguments> danglingElse(){
         return Stream.of(
-                Arguments.of("if (true) if (false) print \"bad\"; else print \"good\";", "good"),
-                Arguments.of("if (true) if (true) print \"bad\"; else print \"good\";", "bad")
+                Arguments.of("if (true) if (false) print \"bad\"; else print \"good\";", "good" + lineSeparator),
+                Arguments.of("if (true) if (true) print \"bad\"; else print \"good\";", "bad" + lineSeparator)
         );
     }
 
     private static Stream<Arguments> ifElse(){
         return Stream.of(
-                Arguments.of("if (true) print \"if\"; else print \"else\";", "if"),
-                Arguments.of("if (false) print \"if\"; else print \"else\";", "else")
+                Arguments.of("if (true) print \"if\"; else print \"else\";", "if" + lineSeparator),
+                Arguments.of("if (false) print \"if\"; else print \"else\";", "else" + lineSeparator),
+                Arguments.of("if (false) print \"if\";", "")
         );
     }
 
